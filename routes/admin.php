@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SkillsController;
 use App\Http\Controllers\Admin\SocialIconController;
 use App\Http\Controllers\Admin\ThemeCustomerController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
@@ -79,6 +80,16 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::prefix('about-section')->name('admin.about.section.')->group(function () {
         Route::get('/', [AboutSectionController::class, 'aboutSection'])->name('index');
         Route::put('/update', [AboutSectionController::class, 'aboutSectionUpdate'])->name('update');
+    });
+
+    // Skiils Section Route here
+    Route::prefix('skills')->name('admin.skills.')->group(function () {
+        Route::get('/', [SkillsController::class, 'index'])->name('index');
+        Route::get('/create', [SkillsController::class, 'create'])->name('create');
+        Route::post('/store', [SkillsController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [SkillsController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [SkillsController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [SkillsController::class, 'destroy'])->name('destroy');
     });
 
     // Post Route here

@@ -30,8 +30,8 @@
                 </li>
                 <li> <a href="{{ route('admin.about.section.index') }}"><i class="bx bx-radio-circle"></i>About Section</a>
                 </li>
-
-
+                <li> <a href="{{ route('admin.skills.index') }}"><i class="bx bx-radio-circle"></i>Skills Section</a>
+                </li>
             </ul>
         </li>
 
