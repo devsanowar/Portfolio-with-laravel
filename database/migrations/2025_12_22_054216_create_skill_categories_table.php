@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skill_sections', function (Blueprint $table) {
+        Schema::create('skill_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('skill_name');
-            $table->string('skill_value');
-            $table->tinyInteger('status')->default(1)->comment('1=active,0=inactive');
+            $table->string('title');
+            $table->string('icon')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('sort_order')->default(0);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skill_sections');
+        Schema::dropIfExists('skill_categories');
     }
 };

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'All Skills')
+@section('title', 'All Skill Categories')
 
 @push('styles')
     <link href="{{ asset('backend') }}/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
@@ -10,12 +10,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="">All Skills</h5>
-                            <a href="{{ route('admin.skills.create') }}" class="btn btn-outline-primary px-5 rounded-0">
-                                Add Skill
+                            <h5 class="">All Skill Categories</h5>
+                            <a href="{{ route('admin.skills.category.create') }}"
+                                class="btn btn-outline-primary px-5 rounded-0">
+                                Add Category
                             </a>
                         </div>
                     </div>
@@ -26,34 +26,38 @@
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Category</th>
-                                        <th>Skill Name</th>
-                                        <th>Percentage</th>
+                                        <th>Title</th>
+                                        <th>Icon</th>
                                         <th>Sort Order</th>
                                         <th>Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-                                    @foreach ($skills as $key => $skill)
+                                    @foreach ($categories as $key => $category)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
+                                            <td>{{ $category->title }}</td>
 
-                                            <td>
-                                                {{ $skill->category->title ?? '—' }}
-                                            </td>
 
-                                            <td>{{ $skill->name }}</td>
 
                                             <td class="text-center">
-                                                <span class="badge bg-primary">{{ $skill->percentage }}%</span>
+                                                @if (!empty($category->icon))
+                                                    @if (Str::startsWith($category->icon, ['fa', 'fas', 'far', 'fal', 'fab']))
+                                                        <i class="{{ $category->icon }}" style="font-size:20px;"></i>
+                                                    @else
+                                                        <img src="{{ asset($category->icon) }}" alt="icon"
+                                                            style="height:28px;">
+                                                    @endif
+                                                @else
+                                                    <span class="text-muted">—</span>
+                                                @endif
                                             </td>
 
-                                            <td class="text-center">{{ $skill->sort_order }}</td>
+                                            <td class="text-center">{{ $category->sort_order }}</td>
 
                                             <td class="text-center">
-                                                @if ($skill->status)
+                                                @if ($category->status)
                                                     <span class="badge bg-success">Active</span>
                                                 @else
                                                     <span class="badge bg-danger">Inactive</span>
@@ -62,20 +66,19 @@
 
                                             <td class="text-center">
                                                 {{-- Edit --}}
-                                                <a href="{{ route('admin.skills.edit', $skill->id) }}"
+                                                <a href="{{ route('admin.skills.category.edit', $category->id) }}"
                                                     class="action-icon border border-primary text-primary me-2">
                                                     <i class="bx bx-edit"></i>
                                                 </a>
 
                                                 {{-- Delete --}}
-                                                <form action="{{ route('admin.skills.destroy', $skill->id) }}"
+                                                <form action="{{ route('admin.skills.category.destroy', $category->id) }}"
                                                     method="POST" class="deleteSkillForm d-inline-block">
                                                     @csrf
                                                     @method('DELETE')
-
                                                     <button type="button"
                                                         class="action-icon border border-danger text-danger deleteBtn"
-                                                        data-id="{{ $skill->id }}">
+                                                        data-id="{{ $category->id }}">
                                                         <i class="bx bx-trash"></i>
                                                     </button>
                                                 </form>
@@ -83,11 +86,9 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
-                        </div>
+                        </div> <!-- table-responsive -->
                     </div> <!-- card-body -->
-
                 </div>
             </div>
         </div>
@@ -101,19 +102,14 @@
 
     <script>
         $(document).ready(function() {
-
-            $('#skillsTable').DataTable({
-                order: [
-                    [4, 'asc']
-                ] // sort_order column by default
-            });
+            $('#skillsTable').DataTable();
 
             $(document).on('click', '.deleteBtn', function() {
                 let form = $(this).closest('form');
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You won't be able to revert this skill!",
+                    text: "You won't be able to revert this category!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -126,7 +122,6 @@
                     }
                 });
             });
-
         });
     </script>
 @endpush

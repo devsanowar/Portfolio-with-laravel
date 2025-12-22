@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('sub_title')->nullable();
             $table->longText('description')->nullable();
-            $table->string('image')->nullable();
-            $table->string('pdf')->nullable();
-            $table->string('button_text')->nullable();
-            $table->string('button_url')->nullable();
-            $table->string('button_text_two')->nullable();
-            $table->string('button_url_two')->nullable();
+            $table->string('github_url')->nullable();
+            $table->string('facebook_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('linkedin_url')->nullable();
+            $table->string('pinterest_url')->nullable();
+            $table->string('medium_url')->nullable();
+            $table->string('dribble_url')->nullable();
             $table->timestamps();
         });
     }

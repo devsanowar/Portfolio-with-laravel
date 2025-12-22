@@ -30,7 +30,20 @@
                 </li>
                 <li> <a href="{{ route('admin.about.section.index') }}"><i class="bx bx-radio-circle"></i>About Section</a>
                 </li>
-                <li> <a href="{{ route('admin.skills.index') }}"><i class="bx bx-radio-circle"></i>Skills Section</a>
+
+            </ul>
+        </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class='bx bx-category'></i>
+                </div>
+                <div class="menu-title">Skills</div>
+            </a>
+            <ul class="mm-collapse">
+                <li> <a href="{{ route('admin.skills.category.index') }}"><i class="bx bx-radio-circle"></i>Categories</a>
+                </li>
+                <li> <a href="{{ route('admin.skills.index') }}"><i class="bx bx-radio-circle"></i>Skills</a>
                 </li>
             </ul>
         </li>
