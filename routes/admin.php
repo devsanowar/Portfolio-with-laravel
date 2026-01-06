@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\Admin\AboutSectionController;
 use Illuminate\Support\Facades\Route;
-
-
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\PostCategoryController;
+
+
 use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\SkillCategoryController;
 use App\Http\Controllers\Admin\SkillsController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KeyFeatureController;
 use App\Http\Controllers\Admin\SocialIconController;
+use App\Http\Controllers\Admin\HeroSectionController;
+use App\Http\Controllers\Admin\AboutSectionController;
+use App\Http\Controllers\Admin\PostCategoryController;
+use App\Http\Controllers\Admin\SkillCategoryController;
 use App\Http\Controllers\Admin\ThemeCustomerController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
 
@@ -104,4 +105,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::put('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'destroy')->name('destroy');
     });
+
+    Route::prefix('')->name('admin.')->group(function () {
+        Route::resource('key-feature', KeyFeatureController::class);
+    });
+
+
 });

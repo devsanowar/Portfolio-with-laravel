@@ -48,6 +48,21 @@
             </ul>
         </li>
 
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class='bx  bx-list-ul'></i>
+                </div>
+                <div class="menu-title">Services</div>
+            </a>
+            <ul class="mm-collapse">
+                <li> <a href="{{ route('admin.key-feature.index') }}"><i class="bx bx-radio-circle"></i>Key Feature</a>
+                </li>
+                {{-- <li> <a href="{{ route('admin.skills.index') }}"><i class="bx bx-radio-circle"></i>Skills</a> --}}
+                </li>
+
+            </ul>
+        </li>
+
 
         <li>
             <a class="has-arrow" href="javascript:;">
