@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KeyFeatureController;
 use App\Http\Controllers\Admin\SocialIconController;
+use App\Http\Controllers\Admin\TechnologyController;
 use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\PostCategoryController;
@@ -108,6 +109,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('')->name('admin.')->group(function () {
         Route::resource('key-feature', KeyFeatureController::class);
+    });
+
+    Route::prefix('')->name('admin.')->group(function () {
+        Route::resource('technology', TechnologyController::class);
     });
 
 

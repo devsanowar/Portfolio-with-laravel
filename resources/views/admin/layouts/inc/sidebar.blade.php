@@ -57,7 +57,7 @@
             <ul class="mm-collapse">
                 <li> <a href="{{ route('admin.key-feature.index') }}"><i class="bx bx-radio-circle"></i>Key Feature</a>
                 </li>
-                {{-- <li> <a href="{{ route('admin.skills.index') }}"><i class="bx bx-radio-circle"></i>Skills</a> --}}
+                <li> <a href="{{ route('admin.technology.index') }}"><i class="bx bx-radio-circle"></i>Technology</a>
                 </li>
 
             </ul>
