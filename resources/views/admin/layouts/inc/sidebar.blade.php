@@ -60,6 +60,9 @@
                 <li> <a href="{{ route('admin.technology.index') }}"><i class="bx bx-radio-circle"></i>Technology</a>
                 </li>
 
+                <li> <a href="{{ route('admin.development_process.index') }}"><i class="bx bx-radio-circle"></i>Development Process</a>
+                </li>
+
             </ul>
         </li>
 

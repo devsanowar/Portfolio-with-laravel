@@ -1,22 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\MenuController;
-
-
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\SkillsController;
-use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DevelopmentProcessController;
+use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\KeyFeatureController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PostCategoryController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SkillCategoryController;
+use App\Http\Controllers\Admin\SkillsController;
 use App\Http\Controllers\Admin\SocialIconController;
 use App\Http\Controllers\Admin\TechnologyController;
-use App\Http\Controllers\Admin\HeroSectionController;
-use App\Http\Controllers\Admin\AboutSectionController;
-use App\Http\Controllers\Admin\PostCategoryController;
-use App\Http\Controllers\Admin\SkillCategoryController;
 use App\Http\Controllers\Admin\ThemeCustomerController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
@@ -33,6 +32,62 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Password Management Route
     Route::prefix('password')->name('admin.password.')->group(function () {
         Route::post('/update', [ProfileController::class, 'changePassword'])->name('update');
+    });
+
+    // Hero section route here
+    Route::prefix('hero-section')->name('admin.hero.section.')->group(function () {
+        Route::get('/', [HeroSectionController::class, 'heroSection'])->name('index');
+        Route::put('/update', [HeroSectionController::class, 'heroSectionUpdate'])->name('update');
+    });
+
+    // About Section Route here
+    Route::prefix('about-section')->name('admin.about.section.')->group(function () {
+        Route::get('/', [AboutSectionController::class, 'aboutSection'])->name('index');
+        Route::put('/update', [AboutSectionController::class, 'aboutSectionUpdate'])->name('update');
+    });
+
+    // Skiils Section Route here
+    Route::prefix('skills')->name('admin.skills.')->group(function () {
+        Route::resource('category', SkillCategoryController::class);
+    });
+
+    Route::prefix('')->name('admin.')->group(function () {
+        Route::resource('skills', SkillsController::class);
+    });
+
+    Route::prefix('services')->name('admin.')->group(function () {
+        Route::resource('key-feature', KeyFeatureController::class);
+        Route::resource('technology', TechnologyController::class);
+
+
+        // Development process route here
+        Route::controller(DevelopmentProcessController::class)->group(function () {
+            Route::get('/development-process',  'index')->name('development_process.index');
+            Route::post('/development-process',  'store')->name('development_process.store');
+            Route::put('/development-process/{development_process}',  'update')->name('development_process.update');
+            Route::delete('/development-process/{development_process}','destroy')->name('development_process.destroy');
+        });
+
+    });
+
+    // Post Category route here
+    Route::prefix('post/category')->controller(PostCategoryController::class)->name('admin.post.category.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    });
+
+    // Post Route here
+    Route::prefix('post')->controller(PostController::class)->name('admin.post.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'destroy')->name('destroy');
     });
 
     // Website Settings route
@@ -61,59 +116,5 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::put('/update/{id}', [MenuController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [MenuController::class, 'destroy'])->name('destroy');
     });
-
-
-    // Post Category route here
-    Route::prefix('post/category')->controller(PostCategoryController::class)->name('admin.post.category.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::put('/update/{id}', 'update')->name('update');
-        Route::delete('/delete/{id}', 'destroy')->name('destroy');
-    });
-
-    // Hero section route here
-    Route::prefix('hero-section')->name('admin.hero.section.')->group(function () {
-        Route::get('/', [HeroSectionController::class, 'heroSection'])->name('index');
-        Route::put('/update', [HeroSectionController::class, 'heroSectionUpdate'])->name('update');
-    });
-
-    // About Section Route here
-    Route::prefix('about-section')->name('admin.about.section.')->group(function () {
-        Route::get('/', [AboutSectionController::class, 'aboutSection'])->name('index');
-        Route::put('/update', [AboutSectionController::class, 'aboutSectionUpdate'])->name('update');
-    });
-
-    // Skills Category Route here
-
-
-    // Skiils Section Route here
-    Route::prefix('skills')->name('admin.skills.')->group(function () {
-        Route::resource('category', SkillCategoryController::class);
-    });
-
-    Route::prefix('')->name('admin.')->group(function () {
-        Route::resource('skills', SkillsController::class);
-    });
-
-    // Post Route here
-    Route::prefix('post')->controller(PostController::class)->name('admin.post.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::put('/update/{id}', 'update')->name('update');
-        Route::delete('/delete/{id}', 'destroy')->name('destroy');
-    });
-
-    Route::prefix('')->name('admin.')->group(function () {
-        Route::resource('key-feature', KeyFeatureController::class);
-    });
-
-    Route::prefix('')->name('admin.')->group(function () {
-        Route::resource('technology', TechnologyController::class);
-    });
-
 
 });
