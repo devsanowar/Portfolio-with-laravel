@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
+            $table->integer('sort_order')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
