@@ -22,6 +22,7 @@ class KeyFeatureStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'service_id' => ['nullable', 'integer', 'exists:services,id'],
             'title'       => 'required|string|max:255',
             'icon'        => 'nullable|string|max:255',
             'description' => 'nullable|string',
@@ -34,6 +35,8 @@ class KeyFeatureStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'service_id.integer' => 'Please select a valid service.',
+            'service_id.exists'  => 'Selected service does not exist. Please choose another service.',
             'title.required'       => 'The title field is required.',
             'title.string'         => 'The title must be a string.',
             'title.max'            => 'The title may not be greater than 255 characters.',
@@ -46,5 +49,5 @@ class KeyFeatureStoreRequest extends FormRequest
             'status.in'            => 'The selected status is invalid.',
         ];
     }
-    
+
 }

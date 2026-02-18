@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Technology;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
+use App\Models\Service;
+use App\Models\Technology;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TechnologyController extends Controller
 {
@@ -15,8 +16,11 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        $technologies = Technology::latest()->get();
-        return view('admin.layouts.pages.services.technology.index', compact('technologies'));
+        $services = Service::select('id', 'service_name')
+            ->orderBy('service_name')
+            ->get();
+        $technologies = Technology::with(['service:id,service_name'])->latest()->get();
+        return view('admin.layouts.pages.services.technology.index', compact('technologies', 'services'));
     }
 
     /**
@@ -62,27 +66,40 @@ class TechnologyController extends Controller
 
         try {
             $technology = Technology::findOrFail($id);
-            $newOrder   = $request->sort_order;
 
-            if ($newOrder !== null) {
-                $exists = Technology::where('id', '!=', $technology->id)
+            $data = $request->validated();
+
+            $oldOrder = $technology->sort_order;
+            $newOrder = $data['sort_order'] ?? null;
+
+            if ($newOrder !== null && (int) $newOrder !== (int) $oldOrder) {
+
+                $other = Technology::where('id', '!=', $technology->id)
                     ->where('sort_order', $newOrder)
-                    ->exists();
+                    ->lockForUpdate()
+                    ->first();
 
-                if ($exists) {
-                    Technology::where('id', '!=', $technology->id)
-                        ->where('sort_order', '>=', $newOrder)
-                        ->increment('sort_order');
+                if ($other) {
+                    $temp = -999999;
+                    while (Technology::where('sort_order', $temp)->exists()) {
+                        $temp--;
+                    }
+
+                    $technology->sort_order = $temp;
+                    $technology->save();
+
+                    $other->sort_order = $oldOrder;
+                    $other->save();
                 }
             }
 
-            $technology->update($request->validated());
+            $technology->update($data);
 
             DB::commit();
 
             return response()->json([
-                'status'  => 'success',
-                'message' => 'Technology updated successfully!',
+                'status'     => 'success',
+                'message'    => 'Technology updated successfully!',
                 'action_url' => route('admin.technology.index'),
             ]);
 

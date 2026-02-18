@@ -21,7 +21,7 @@
                                 <tr>
                                     <th>S/N</th>
                                     <th>Title</th>
-                                    <th>Icon</th>
+                                    <th>Service Name</th>
                                     <th>Description</th>
                                     <th>Sort Order</th>
                                     <th>Status</th>
@@ -34,13 +34,9 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $feature->title }}</td>
                                     <td>
-                                        @if($feature->icon)
-                                            <i class="{{ $feature->icon }}"></i>
-                                        @else
-                                            -
-                                        @endif
+                                       {{ $feature->service->service_name ?? '' }}
                                     </td>
-                                    <td>{!! Str::limit($feature->description, 50) !!}</td>
+                                    <td>{!! Str::limit($feature->description, 30) !!}</td>
                                     <td class="text-center"><span class="badge bg-success">{{ $feature->sort_order }}</span></td>
 
                                     <td class="text-center">

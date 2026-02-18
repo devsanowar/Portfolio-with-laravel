@@ -55,6 +55,8 @@
                 <div class="menu-title">Services</div>
             </a>
             <ul class="mm-collapse">
+                <li> <a href="{{ route('admin.services.index') }}"><i class="bx bx-radio-circle"></i>Services</a>
+                </li>
                 <li> <a href="{{ route('admin.key-feature.index') }}"><i class="bx bx-radio-circle"></i>Key Feature</a>
                 </li>
                 <li> <a href="{{ route('admin.technology.index') }}"><i class="bx bx-radio-circle"></i>Technology</a>

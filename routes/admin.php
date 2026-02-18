@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\SkillCategoryController;
 use App\Http\Controllers\Admin\SkillsController;
 use App\Http\Controllers\Admin\SocialIconController;
@@ -56,6 +57,14 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('services')->name('admin.')->group(function () {
+
+        Route::get('/', [ServicesController::class, 'index'])->name('services.index');
+        Route::get('/create', [ServicesController::class, 'create'])->name('services.create');
+        Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
+        Route::get('/edit/{id}', [ServicesController::class, 'edit'])->name('services.edit');
+        Route::put('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
+        Route::delete('/delete/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
+
         Route::resource('key-feature', KeyFeatureController::class);
         Route::resource('technology', TechnologyController::class);
 

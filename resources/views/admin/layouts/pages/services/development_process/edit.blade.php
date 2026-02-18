@@ -1,17 +1,18 @@
-<!-- Edit Technology Modal -->
-<div class="modal fade" id="editTechnologyModal" tabindex="-1" aria-labelledby="editTechnologyLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="editTechnologyForm" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="modal-content">
+<div class="modal fade" id="editProcessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form id="editProcessForm" method="POST" action="{{ route('admin.development_process.update', 0) }}"
+                class="modal-content">
+                @csrf
+                @method('PUT')
+
+                <input type="hidden" id="editProcessId">
+
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editTechnologyLabel">Edit Technology</h5>
+                    <h5 class="modal-title">Edit Development Process</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
-                    <input type="hidden" id="editTechId">
 
                     {{-- Service --}}
                     <div class="col-md-12 mb-3">
@@ -29,24 +30,18 @@
                         <small class="text-danger error-text" data-error-for="service_id"></small>
                     </div>
 
-
                     <div class="mb-3">
-                        <label for="edit_name" class="form-label">Technology Name</label>
-                        <input type="text" class="form-control" id="edit_name" name="name" required>
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" id="edit_title" class="form-control">
                     </div>
 
                     <div class="mb-3">
-                        <label for="edit_icon_class" class="form-label">Icon Class</label>
-                        <input type="text" class="form-control" id="edit_icon_class" name="icon_class" placeholder="e.g., bx bx-code">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" id="edit_description" rows="5" class="form-control"></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="edit_sort_order" class="form-label">Sort Order</label>
-                        <input type="number" class="form-control" id="edit_sort_order" name="sort_order">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="edit_status" class="form-label">Status</label>
+                        <label class="form-label">Status</label>
                         <select name="status" id="edit_status" class="form-select">
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
@@ -55,10 +50,9 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update Technology</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>

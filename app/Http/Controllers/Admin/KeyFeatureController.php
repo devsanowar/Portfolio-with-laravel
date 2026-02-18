@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Models\KeyFeature;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KeyFeatureStoreRequest;
 use App\Http\Requests\KeyFeatureUpdateRequest;
+use App\Models\KeyFeature;
+use App\Models\Service;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class KeyFeatureController extends Controller
 {
@@ -15,7 +16,7 @@ class KeyFeatureController extends Controller
      */
     public function index()
     {
-        $keyFeatures = KeyFeature::orderBy('sort_order', 'asc')->get();
+        $keyFeatures = KeyFeature::with(['service:id,service_name'])->orderBy('sort_order', 'asc')->get();
         return view('admin.layouts.pages.services.key-feature.index', compact('keyFeatures'));
     }
 
@@ -24,16 +25,22 @@ class KeyFeatureController extends Controller
      */
     public function create()
     {
-        return view('admin.layouts.pages.services.key-feature.create');
+        $services = Service::select('id', 'service_name')
+            ->orderBy('service_name')
+            ->get();
+
+        return view('admin.layouts.pages.services.key-feature.create', compact('services'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(KeyFeatureStoreRequest $request)
     {
         try {
             $data = $request->validated();
+
+            // service_id nullable so empty string আসলে null করে দাও (safe)
+            if (array_key_exists('service_id', $data) && $data['service_id'] === '') {
+                $data['service_id'] = null;
+            }
 
             // KeyFeature create
             $feature = KeyFeature::create($data);
@@ -46,6 +53,7 @@ class KeyFeatureController extends Controller
 
         } catch (\Exception $e) {
             Log::error('KeyFeature Store Error: ' . $e->getMessage());
+
             return response()->json([
                 'status'  => 'error',
                 'message' => 'Failed to create Key Feature. Please try again.',
@@ -67,7 +75,11 @@ class KeyFeatureController extends Controller
     public function edit(string $id)
     {
         $feature = KeyFeature::findOrFail($id);
-        return view('admin.layouts.pages.services.key-feature.edit', compact('feature'));
+
+        $services = Service::select('id', 'service_name')
+            ->orderBy('service_name')
+            ->get();
+        return view('admin.layouts.pages.services.key-feature.edit', compact('feature', 'services'));
     }
 
     /**
@@ -79,10 +91,15 @@ class KeyFeatureController extends Controller
 
         try {
             $feature  = KeyFeature::findOrFail($id);
-            $newOrder = $request->sort_order;
+            $data     = $request->validated();
+            $newOrder = $data['sort_order'] ?? null;
+
+            // service_id nullable: empty string আসলে null করে দাও (select থেকে "" আসতে পারে)
+            if (array_key_exists('service_id', $data) && $data['service_id'] === '') {
+                $data['service_id'] = null;
+            }
 
             if ($newOrder !== null) {
-
                 $exists = KeyFeature::where('id', '!=', $feature->id)
                     ->where('sort_order', $newOrder)
                     ->exists();
@@ -94,13 +111,13 @@ class KeyFeatureController extends Controller
                 }
             }
 
-            $feature->update($request->validated());
+            $feature->update($data);
 
             DB::commit();
 
             return response()->json([
-                'status'  => 'success',
-                'message' => 'Key Feature updated successfully!',
+                'status'     => 'success',
+                'message'    => 'Key Feature updated successfully!',
                 'action_url' => route('admin.key-feature.index'),
             ]);
 

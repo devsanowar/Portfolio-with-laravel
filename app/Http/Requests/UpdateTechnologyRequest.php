@@ -25,6 +25,7 @@ class UpdateTechnologyRequest extends FormRequest
         $technologyId = $this->route('technology'); // The {technology} route parameter
 
         return [
+            'service_id' => ['nullable', 'integer', 'exists:services,id'],
             'name' => 'required|string|max:255|unique:technologies,name,' . $technologyId,
             'icon_class' => 'nullable|string|max:255',
             'sort_order' => 'nullable|integer|min:0',

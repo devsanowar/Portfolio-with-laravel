@@ -21,7 +21,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('admin.key-feature.index') }}" class="btn btn-outline-primary px-5 rounded-0">
+                                <a href="{{ route('admin.key-feature.index') }}"
+                                    class="btn btn-outline-primary px-5 rounded-0">
                                     All Key Features
                                 </a>
                             </li>
@@ -33,12 +34,31 @@
                                 <form id="keyFeatureForm" method="POST">
                                     @csrf
 
+                                    {{-- Service --}}
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Service (optional)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class='bx bx-link'></i></span>
+                                            <select name="service_id" class="form-control">
+                                                <option value="">-- Select Service --</option>
+                                                @foreach ($services as $service)
+                                                    <option value="{{ $service->id }}">
+                                                        {{ $service->service_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <small class="text-danger error-text" data-error-for="service_id"></small>
+                                    </div>
+
+
                                     {{-- Title --}}
                                     <div class="col-md-12 mb-3">
                                         <label class="form-label">Title</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class='bx bx-edit'></i></span>
-                                            <input type="text" name="title" class="form-control" placeholder="Enter Feature Title">
+                                            <input type="text" name="title" class="form-control"
+                                                placeholder="Enter Feature Title">
                                         </div>
                                         <small class="text-danger error-text" data-error-for="title"></small>
                                     </div>
@@ -48,7 +68,8 @@
                                         <label class="form-label">Icon</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class='bx bx-image'></i></span>
-                                            <input type="text" name="icon" class="form-control" placeholder="Enter icon class (optional)">
+                                            <input type="text" name="icon" class="form-control"
+                                                placeholder="Enter icon class (optional)">
                                         </div>
                                         <small class="text-muted">Example: fa-solid fa-star</small>
                                         <small class="text-danger error-text" data-error-for="icon"></small>
@@ -69,7 +90,8 @@
                                         <label class="form-label">Sort Order (optional)</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class='bx bx-sort'></i></span>
-                                            <input type="number" name="sort_order" class="form-control" placeholder="0" min="0" value="0">
+                                            <input type="number" name="sort_order" class="form-control" placeholder="0"
+                                                min="0" value="0">
                                         </div>
                                         <small class="text-danger error-text" data-error-for="sort_order"></small>
                                     </div>
@@ -91,7 +113,9 @@
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-primary" id="keyFeatureSubmitBtn">
                                             <span id="keyFeatureBtnText">Create Key Feature</span>
-                                            <span id="keyFeatureBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                            <span id="keyFeatureBtnSpinner"
+                                                class="spinner-border spinner-border-sm d-none" role="status"
+                                                aria-hidden="true"></span>
                                         </button>
                                     </div>
 
@@ -108,7 +132,6 @@
 @endsection
 
 @push('scripts')
-
     <script>
         $(document).ready(function() {
 
@@ -154,7 +177,8 @@
                         $btnSpinner.addClass('d-none');
 
                         if (response.status === 'success') {
-                            toastr.success(response.message || 'Key Feature created successfully.');
+                            toastr.success(response.message ||
+                                'Key Feature created successfully.');
                             form.reset();
 
                         } else {

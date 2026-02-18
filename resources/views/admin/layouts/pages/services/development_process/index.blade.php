@@ -29,8 +29,10 @@
                                     <tr>
                                         <th>S/N</th>
                                         <th>Title</th>
+                                        <th>Service Name</th>
+                                        <th>Description</th>
+                                        <th>Sort Order</th>
                                         <th>Status</th>
-                                        <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -39,6 +41,11 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $process->title }}</td>
+                                            <td>{{ $process->service->service_name ?? '' }}</td>
+                                            <td>{{ Str::limit($process->description, 30, '...') }}</td>
+                                            <td class="text-center"><span
+                                                    class="badge bg-success">{{ $process->sort_order }}</span></td>
+
                                             <td class="text-center">
                                                 @if ($process->status)
                                                     <span class="badge bg-success">Active</span>
@@ -46,12 +53,12 @@
                                                     <span class="badge bg-danger">Inactive</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $process->created_at?->format('d M Y') }}</td>
                                             <td class="text-center">
                                                 {{-- Edit --}}
                                                 <button type="button"
                                                     class="action-icon border border-primary text-primary me-2 editProcessBtn"
                                                     data-id="{{ $process->id }}" data-title="{{ $process->title }}"
+                                                    data-service_id="{{ $process->service_id }}"
                                                     data-description="{{ e($process->description) }}"
                                                     data-status="{{ $process->status }}">
                                                     <i class="bx bx-edit"></i>
@@ -82,95 +89,10 @@
     </div>
 
     {{-- Create Modal --}}
-    <div class="modal fade" id="addProcessModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <form action="{{ route('admin.development_process.store') }}" method="POST" class="modal-content">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Development Process</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" name="title" value="{{ old('title') }}"
-                            class="form-control @error('title') is-invalid @enderror">
-                        @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" rows="5" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select name="status" class="form-select @error('status') is-invalid @enderror">
-                            <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ old('status', 0) == 0 ? 'selected' : '' }}>Inactive</option>
-                        </select>
-                        @error('status')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    @include('admin.layouts.pages.services.development_process.create')
 
     {{-- Edit Modal --}}
-    <div class="modal fade" id="editProcessModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <form id="editProcessForm" method="POST" action="{{ route('admin.development_process.update', 0) }}"
-                class="modal-content">
-                @csrf
-                @method('PUT')
-
-                <input type="hidden" id="editProcessId">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Development Process</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" name="title" id="edit_title" class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" id="edit_description" rows="5" class="form-control"></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select name="status" id="edit_status" class="form-select">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    @include('admin.layouts.pages.services.development_process.edit')
 @endsection
 
 @push('scripts')
@@ -222,6 +144,9 @@
             $('#edit_title').val(btn.data('title'));
             $('#edit_description').val(btn.data('description'));
             $('#edit_status').val(btn.data('status'));
+
+            let serviceId = btn.data('service_id');
+            $('#edit_service_id').val(serviceId ? serviceId : '');
 
             $('#editProcessForm').attr(
                 'action',

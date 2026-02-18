@@ -22,6 +22,7 @@ class StoreTechnologyRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'service_id' => ['nullable', 'integer', 'exists:services,id'],
             'name' => 'required|string|max:255|unique:technologies,name',
             'icon_class' => 'nullable|string|max:255',
             'sort_order' => 'nullable|integer|min:0',
@@ -32,6 +33,8 @@ class StoreTechnologyRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'service_id.integer' => 'Please select a valid service.',
+            'service_id.exists'  => 'Selected service does not exist. Please choose another service.',
             'name.required' => 'Technology name is required.',
             'name.unique' => 'This technology already exists.',
             'status.in' => 'Status must be either Active or Inactive.',

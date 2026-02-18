@@ -30,6 +30,7 @@
                                     <th>S/N</th>
                                     <th>Name</th>
                                     <th>Icon</th>
+                                    <th>Service Name</th>
                                     <th>Sort Order</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -47,6 +48,7 @@
                                             -
                                         @endif
                                     </td>
+                                    <td>{{ $tech->service->service_name ?? '' }}</td>
                                     <td class="text-center"><span class="badge bg-success">{{ $tech->sort_order }}</span></td>
                                     <td class="text-center">
                                         @if($tech->status)
@@ -62,6 +64,7 @@
                                         type="button"
                                         class="action-icon border border-primary text-primary me-2 editTechBtn"
                                         data-id="{{ $tech->id }}"
+                                        data-service_id="{{ $tech->service_id }}"  {{-- NEW --}}
                                         data-name="{{ $tech->name }}"
                                         data-icon="{{ $tech->icon_class }}"
                                         data-sort="{{ $tech->sort_order }}"
@@ -69,6 +72,7 @@
                                     >
                                         <i class="bx bx-edit"></i>
                                     </button>
+
 
 
                                         <!-- Delete Form -->
@@ -146,15 +150,18 @@ $(document).on('click', '.editTechBtn', function() {
     $('#edit_sort_order').val(button.data('sort'));
     $('#edit_status').val(button.data('status'));
 
-    // Set form action dynamically
-    $('#editTechnologyForm').attr('action', '/admin/technology/' + id);
+    let serviceId = button.data('service_id');
+    $('#edit_service_id').val(serviceId ? serviceId : '');
 
-    // Show modal
-    var myModal = new bootstrap.Modal(document.getElementById('editTechnologyModal'));
+    $('#editTechnologyForm').attr('action', '/admin/services/technology/' + id);
+
+    const modalEl = document.getElementById('editTechnologyModal');
+    const myModal = new bootstrap.Modal(modalEl);
     myModal.show();
 });
 
-// AJAX submit for edit
+
+// submit for edit
 $('#editTechnologyForm').on('submit', function(e){
     e.preventDefault();
 
@@ -168,12 +175,15 @@ $('#editTechnologyForm').on('submit', function(e){
         data: data,
         success: function(res){
             if (res.status === 'success') {
+                toastr.success(res.message || 'Technology updated successfully.');
+
+                const modalEl = document.getElementById('editTechnologyModal');
+                const instance = bootstrap.Modal.getInstance(modalEl);
+                if (instance) instance.hide();
+
                 setTimeout(function() {
                     window.location.href = res.action_url;
                 }, 1000);
-                toastr.success(res.message || 'Technology updated successfully.');
-
-                $('#editTechnologyModal').modal('hide');
             } else {
                 toastr.error(res.message || 'Something went wrong.');
             }

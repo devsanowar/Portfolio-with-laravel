@@ -10,6 +10,23 @@
                 </div>
 
                 <div class="modal-body">
+                    {{-- Service --}}
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Service</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class='bx bx-link'></i></span>
+                            <select name="service_id" class="form-control">
+                                <option value="">-- Select Service --</option>
+                                @foreach ($services as $service)
+                                    <option value="{{ $service->id }}">
+                                        {{ $service->service_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <small class="text-danger error-text" data-error-for="service_id"></small>
+                    </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Technology Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"

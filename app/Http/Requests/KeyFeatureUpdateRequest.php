@@ -22,6 +22,7 @@ class KeyFeatureUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'service_id' => ['nullable', 'integer', 'exists:services,id'],
             'title'       => 'required|string|max:255',
             'icon'        => 'nullable|string|max:255',
             'description' => 'nullable|string',
