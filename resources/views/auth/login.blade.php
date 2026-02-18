@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="{{ asset('backend') }}/assets/images/favicon-32x32.png" type="image/png" />
+	<link rel="icon" href="{{ asset($websiteSetting->website_favicon ?? '/assets/images/favicon-32x32.png') }}" type="image/png"/>
 	<!--plugins-->
 	<link href="{{ asset('backend') }}/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
 	<link href="{{ asset('backend') }}/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
@@ -45,10 +45,10 @@
 							<div class="card-body p-sm-5">
 								<div class="">
 									<div class="mb-3 text-center">
-										<img src="{{ asset('backend') }}/assets/images/logo-icon.png" width="60" alt="">
+										<img src="{{ asset($websiteSetting->website_favicon ?? '/assets/images/logo-icon.png') }}" width="60" alt="">
 									</div>
 									<div class="text-center mb-4">
-										<h5 class="">Rukada Admin</h5>
+										<h5 class="">Portfolio Admin</h5>
 										<p class="mb-0">Please log in to your account</p>
 									</div>
 									<div class="form-body">
@@ -97,25 +97,12 @@
 													<button type="submit" class="btn btn-primary">Sign in</button>
 												</div>
 											</div>
-											<div class="col-12">
-												<div class="text-center ">
-													<p class="mb-0">Don't have an account yet? <a href="auth-cover-signup.html">Sign up here</a>
-													</p>
-												</div>
-											</div>
+											
 										</form>
 
 
 									</div>
-									<div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-										<hr>
-									</div>
-									<div class="list-inline contacts-social text-center">
-										<a href="{{ url('auth/facebook') }}" class="list-inline-item bg-facebook text-white border-0 rounded-3"><i class="bx bxl-facebook"></i></a>
-										<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0 rounded-3"><i class="bx bxl-twitter"></i></a>
-										<a href="javascript:;" class="list-inline-item bg-google text-white border-0 rounded-3"><i class="bx bxl-google"></i></a>
-										<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i class="bx bxl-linkedin"></i></a>
-									</div>
+
 
 								</div>
 							</div>

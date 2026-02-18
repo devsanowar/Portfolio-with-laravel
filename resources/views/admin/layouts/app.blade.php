@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!--favicon-->
-	<link rel="icon" href="{{ asset('backend') }}/assets/images/favicon-32x32.png" type="image/png"/>
+	<link rel="icon" href="{{ asset($websiteSetting->website_favicon ?? '/assets/images/favicon-32x32.png') }}" type="image/png"/>
 	<!--plugins-->
 	<title>@yield('title') - {{ $websiteSetting->website_title ?? '' }}</title>
 
