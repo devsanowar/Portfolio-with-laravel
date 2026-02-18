@@ -68,6 +68,14 @@
             </ul>
         </li>
 
+        <li>
+            <a href="{{ route('admin.cta.edit') }}">
+                <div class="parent-icon"><i class='bx bx-rocket'></i>
+                </div>
+                <div class="menu-title">CTA</div>
+            </a>
+        </li>
+
 
         <li>
             <a class="has-arrow" href="javascript:;">

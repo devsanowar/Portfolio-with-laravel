@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutSectionController;
+use App\Http\Controllers\Admin\CTAController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DevelopmentProcessController;
 use App\Http\Controllers\Admin\HeroSectionController;
@@ -78,6 +79,12 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         });
 
     });
+
+    Route::prefix('cta')->name('admin.cta.')->group(function () {
+        Route::get('/edit/', [CTAController::class, 'edit'])->name('edit');
+        Route::post('/save', [CTAController::class, 'save'])->name('save');
+    });
+
 
     // Post Category route here
     Route::prefix('post/category')->controller(PostCategoryController::class)->name('admin.post.category.')->group(function () {
