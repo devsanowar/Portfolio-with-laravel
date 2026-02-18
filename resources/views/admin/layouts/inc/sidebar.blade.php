@@ -1,10 +1,12 @@
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
+        {{-- <div>
+            <img src="{{ asset($websiteSetting->website_header_logo ?? 'backend/assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
+        </div> --}}
         <div>
-            <img src="{{ asset('backend') }}/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-        </div>
-        <div>
+            <a href="{{ route('home') }}" target="_blank">
             <h4 class="logo-text">{{ $websiteSetting->website_title ?? '' }}</h4>
+            </a>
         </div>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
         </div>
@@ -73,6 +75,14 @@
                 <div class="parent-icon"><i class='bx bx-rocket'></i>
                 </div>
                 <div class="menu-title">CTA</div>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.project.index') }}">
+                <div class="parent-icon"><i class='bx bx-briefcase'></i>
+                </div>
+                <div class="menu-title">Projects</div>
             </a>
         </li>
 

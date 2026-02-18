@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\SkillCategoryController;
 use App\Http\Controllers\Admin\SkillsController;
@@ -83,6 +84,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::prefix('cta')->name('admin.cta.')->group(function () {
         Route::get('/edit/', [CTAController::class, 'edit'])->name('edit');
         Route::post('/save', [CTAController::class, 'save'])->name('save');
+    });
+
+    Route::prefix('project')->name('admin.project.')->group(function () {
+        Route::get('/', [ProjectController::class, 'index'])->name('index');
+        Route::get('/create', [ProjectController::class, 'create'])->name('create');
+        Route::post('/store', [ProjectController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [ProjectController::class, 'update'])->name('update');
+        Route::put('/delete/{id}', [ProjectController::class, 'destroy'])->name('destroy');
     });
 
 

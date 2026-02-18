@@ -1,14 +1,4 @@
-/*
 
-Template Name: Rukada Admin
-
-Author: codervent
-
-Email: codervent@gmail.com
-
-File: app.css
-
-*/
 
 body {
     font-size: 14px;
@@ -85,7 +75,7 @@ a {
 }
 
 .logo-icon {
-    width: 30px;
+	width: 110px;
 }
 
 .logo-text {
@@ -279,7 +269,7 @@ a {
 }
 
 .sidebar-wrapper .metismenu a .parent-icon {
-    font-size: 24px;
+    font-size: 17px;
 
     line-height: 1;
 }

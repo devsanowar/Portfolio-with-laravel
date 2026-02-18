@@ -1,12 +1,10 @@
 <?php
 
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Social\SocialLoginController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 // Route::get('/dashboard', function () {
