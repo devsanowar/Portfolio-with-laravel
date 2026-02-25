@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Software Engineer Portfolio</title>
+    <title>{{ $websiteSetting->website_title }} | @yield(section: 'title')</title>
+    <link rel="icon" href="{{ asset($websiteSetting->website_favicon ?? '/assets/images/favicon-32x32.png') }}" type="image/png"/>
+
 
     @include('website.layouts.inc.style')
 </head>

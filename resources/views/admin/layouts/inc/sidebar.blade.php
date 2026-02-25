@@ -67,7 +67,18 @@
                 <li> <a href="{{ route('admin.development_process.index') }}"><i class="bx bx-radio-circle"></i>Development Process</a>
                 </li>
 
+                <li> <a href="{{ route('admin.package_pricings.index') }}"><i class="bx bx-radio-circle"></i>Package Pricing</a>
+                </li>
+
             </ul>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.faqs.index') }}">
+                <div class="parent-icon"><i class='bx bx-rocket'></i>
+                </div>
+                <div class="menu-title">FAQ</div>
+            </a>
         </li>
 
         <li>

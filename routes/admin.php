@@ -4,9 +4,11 @@ use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\CTAController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DevelopmentProcessController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\KeyFeatureController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PackagePricingController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -70,15 +72,33 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::resource('key-feature', KeyFeatureController::class);
         Route::resource('technology', TechnologyController::class);
 
-
         // Development process route here
         Route::controller(DevelopmentProcessController::class)->group(function () {
-            Route::get('/development-process',  'index')->name('development_process.index');
-            Route::post('/development-process',  'store')->name('development_process.store');
-            Route::put('/development-process/{development_process}',  'update')->name('development_process.update');
-            Route::delete('/development-process/{development_process}','destroy')->name('development_process.destroy');
+            Route::get('/development-process', 'index')->name('development_process.index');
+            Route::post('/development-process', 'store')->name('development_process.store');
+            Route::put('/development-process/{development_process}', 'update')->name('development_process.update');
+            Route::delete('/development-process/{development_process}', 'destroy')->name('development_process.destroy');
         });
 
+        // Package Pricing route here
+        Route::prefix('package-pricing')->controller(PackagePricingController::class)->group(function () {
+            Route::get('/', 'index')->name('package_pricings.index');
+            Route::get('/create', 'create')->name('package_pricings.create');
+            Route::post('/store', 'store')->name('package_pricings.store');
+            Route::get('/edit/{id}', 'edit')->name('package_pricings.edit');
+            Route::put('/update/{id}', 'update')->name('package_pricings.update');
+            Route::delete('/delete/{id}', 'destroy')->name('package_pricings.destroy');
+        });
+
+    });
+
+    Route::prefix('faqs')->name('admin.')->group(function () {
+        Route::get('/', [FaqController::class, 'index'])->name('faqs.index');
+        Route::get('/create', [FaqController::class, 'create'])->name('faqs.create');
+        Route::post('/store', [FaqController::class, 'store'])->name('faqs.store');
+        Route::get('/edit/{id}', [FaqController::class, 'edit'])->name('faqs.edit');
+        Route::post('/update/{id}', [FaqController::class, 'update'])->name('faqs.update');
+        Route::delete('/delete/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
     });
 
     Route::prefix('cta')->name('admin.cta.')->group(function () {
@@ -94,7 +114,6 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::put('/update/{id}', [ProjectController::class, 'update'])->name('update');
         Route::put('/delete/{id}', [ProjectController::class, 'destroy'])->name('destroy');
     });
-
 
     // Post Category route here
     Route::prefix('post/category')->controller(PostCategoryController::class)->name('admin.post.category.')->group(function () {

@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\AboutSection;
+use App\Models\HeroSection;
 
 class HomeController extends Controller
 {
     public function index(){
-        return view('website.layouts.pages.home');
+        $hero = HeroSection::first();
+        $about = AboutSection::first();
+        return view('website.layouts.pages.home', compact(
+            'hero',
+            'about',
+
+        ));
     }
 }

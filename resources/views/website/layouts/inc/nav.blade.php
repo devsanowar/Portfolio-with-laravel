@@ -1,6 +1,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#home">&lt;DEV/&gt;</a>
+            <a class="navbar-brand" href="#home"><img src="{{ asset($websiteSetting->website_header_logo ?? '/assets/images/favicon-32x32.png') }}" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>

@@ -4,12 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AboutSection extends Model
+class Faq extends Model
 {
     protected $guarded = ['id'];
-
-    protected $casts = [
-        'skills' => 'array',
-    ];
-
 }
