@@ -22,4 +22,8 @@ class Service extends Model
     {
         return $this->hasMany(DevelopmentProcess::class, 'service_id');
     }
+
+    protected $casts = [
+        'features' => 'array',
+    ];
 }
