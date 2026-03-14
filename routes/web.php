@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/contact-store', [ContactController::class,'sendMessage'])->name('contact.send');
 
 
 // Route::get('/dashboard', function () {

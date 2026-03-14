@@ -2153,3 +2153,29 @@ footer p {
     margin: 150px auto;
   }
 }
+
+
+#formMessage {
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#formMessage.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+#formMessage.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.btn-custom:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+

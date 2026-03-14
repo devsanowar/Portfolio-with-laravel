@@ -123,11 +123,11 @@
         fadeInSections();
 
         // Contact form submission
-        $("#contactForm").on("submit", function(e) {
-            e.preventDefault();
-            alert("Thank you for your message! I will get back to you soon.");
-            this.reset();
-        });
+        // $("#contactForm").on("submit", function(e) {
+        //     e.preventDefault();
+        //     alert("Thank you for your message! I will get back to you soon.");
+        //     this.reset();
+        // });
 
         // Mobile navbar collapse on link click
         $(".navbar-nav>li>a").on("click", function() {
@@ -135,13 +135,6 @@
         });
     });
 </script>
-
-
-
-
-
-
-
 
 
 <script>
@@ -246,3 +239,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+
+@stack('scripts')
